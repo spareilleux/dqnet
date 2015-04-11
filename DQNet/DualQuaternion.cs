@@ -142,27 +142,29 @@ namespace DQNet
         /// <exception cref="T:System.ArgumentOutOfRangeException">
         /// Thrown when <paramref name="values"/> contains more or less than eight elements.
         /// </exception>
-        public DualQuaternion(IList<float> values)
+        public DualQuaternion(IEnumerable<float> values)
         {
             if (values == null)
             {
                 throw new ArgumentNullException("values");
             }
 
-            if (values.Count != 8)
+            var valuesList = values as IList<float> ?? values.ToList();
+
+            if (valuesList.Count != 8)
             {
                 throw new ArgumentOutOfRangeException("values", "There must be four and only four input values for Quaternion.");
             }
 
-            this.Real.X = values[0];
-            this.Real.Y = values[1];
-            this.Real.Z = values[2];
-            this.Real.W = values[3];
+            this.Real.X = valuesList[0];
+            this.Real.Y = valuesList[1];
+            this.Real.Z = valuesList[2];
+            this.Real.W = valuesList[3];
 
-            this.Dual.X = values[4];
-            this.Dual.Y = values[5];
-            this.Dual.Z = values[6];
-            this.Dual.W = values[7];
+            this.Dual.X = valuesList[4];
+            this.Dual.Y = valuesList[5];
+            this.Dual.Z = valuesList[6];
+            this.Dual.W = valuesList[7];
         }
 
         #endregion
@@ -170,7 +172,7 @@ namespace DQNet
         #region Public Properties
 
         /// <summary>
-        /// Gets the rotation.
+        /// Gets the rotation from the dual quaternion.
         /// </summary>
         public Quaternion Rotation
         {
@@ -181,7 +183,7 @@ namespace DQNet
         }
 
         /// <summary>
-        /// Gets the translation.
+        /// Gets the translation from the dual quaternion.
         /// </summary>
         public Vector3 Translation
         {
@@ -231,13 +233,13 @@ namespace DQNet
         #region Indexer
 
         /// <summary>
-        /// The this.
+        /// Gets or sets a dual quaternion component by index.
         /// </summary>
         /// <param name="index">
         /// The index.
         /// </param>
         /// <returns>
-        /// The <see cref="float"/>.
+        /// The <see cref="float"/> component of the dual quaternion.
         /// </returns>
         public float this[int index]
         {
@@ -933,6 +935,7 @@ namespace DQNet
             double y = q[1];
             double z = q[2];
             double w = q[3];
+
             double x0 = q[4];
             double y0 = q[5];
             double z0 = q[6];
@@ -996,8 +999,8 @@ namespace DQNet
             var result = Math.Abs(
                 (plane.Real.X * point.Dual.X) +
                 (plane.Real.Y * point.Dual.Y) +
-                (plane.Real.Z * point.Dual.Z)
-                - plane.Dual.Z) < MathUtil.ZeroTolerance;
+                (plane.Real.Z * point.Dual.Z) - plane.Dual.Z) 
+                < MathUtil.ZeroTolerance;
 
             return result;
         }
