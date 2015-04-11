@@ -159,10 +159,10 @@ namespace DQNet
             this.Real.Z = values[2];
             this.Real.W = values[3];
 
-            this.Dual.X = values[0];
-            this.Dual.Y = values[1];
-            this.Dual.Z = values[2];
-            this.Dual.W = values[3];
+            this.Dual.X = values[4];
+            this.Dual.Y = values[5];
+            this.Dual.Z = values[6];
+            this.Dual.W = values[7];
         }
 
         #endregion
