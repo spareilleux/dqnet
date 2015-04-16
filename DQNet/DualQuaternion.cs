@@ -723,7 +723,7 @@ namespace DQNet
         }
 
         /// <summary>
-        /// Create a rotion then translation dual quaternion (r + ε½tr).
+        /// Creates a rotation then translation dual quaternion (r + ε½tr).
         /// </summary>
         /// <param name="rotation">
         /// The rotation.
